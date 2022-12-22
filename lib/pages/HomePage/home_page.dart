@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/widget/add_todo.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("To do list"),
-        backgroundColor: Color.fromARGB(185, 60, 75, 20),
+        backgroundColor: const Color.fromARGB(185, 60, 75, 20),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromARGB(143, 44, 43, 43),
@@ -46,6 +47,19 @@ class _HomePageState extends State<HomePage> {
             label: "Completed",
           ),
         ],
+      ),
+      body: tabs[selectedIndex],
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.black,
+        onPressed: () => showDialog(
+          builder: (context) => const AddTodoDialogWidget(),
+          context: context,
+          barrierDismissible: false,
+        ),
+        child: const Icon(Icons.add),
       ),
     );
   }
