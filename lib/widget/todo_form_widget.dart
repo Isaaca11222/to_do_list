@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class TodoFormWidget extends StatelessWidget {
@@ -22,8 +24,10 @@ class TodoFormWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             buildTitle(),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             buildDescription(),
+            SizedBox(height: 32),
+            buildButtom(),
           ],
         ),
       );
@@ -45,7 +49,6 @@ class TodoFormWidget extends StatelessWidget {
       );
 
   Widget buildDescription() => TextFormField(
-        maxLines: 1,
         initialValue: title,
         onChanged: onChangedTitle,
         validator: (title) {
@@ -57,6 +60,16 @@ class TodoFormWidget extends StatelessWidget {
         decoration: const InputDecoration(
           border: UnderlineInputBorder(),
           labelText: 'Description',
+        ),
+      );
+  Widget buildButtom() => SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.black),
+          ),
+          onPressed: onSavedTodo,
+          child: Text('Save'),
         ),
       );
 }

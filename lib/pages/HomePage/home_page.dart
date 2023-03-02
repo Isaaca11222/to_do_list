@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/widget/add_todo.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
+  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,21 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("To do list"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "To do list",
+              style: GoogleFonts.lora(fontSize: 30),
+            ),
+          ],
+        ),
         backgroundColor: const Color.fromARGB(185, 60, 75, 20),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromARGB(143, 44, 43, 43),
-        unselectedItemColor: Colors.white.withOpacity(0.7),
-        selectedItemColor: Colors.white,
+        unselectedItemColor: Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
+        selectedItemColor: Color.fromARGB(255, 241, 238, 238),
         currentIndex: selectedIndex,
         onTap: (index) => setState(() {
           selectedIndex = index;
