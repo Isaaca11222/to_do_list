@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/widget/add_todo.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:to_do_list/widget/todo_list_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      Container(),
+      const TodoListWidget(),
       Container(),
     ];
 
@@ -36,8 +37,9 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromARGB(143, 44, 43, 43),
-        unselectedItemColor: Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
-        selectedItemColor: Color.fromARGB(255, 241, 238, 238),
+        unselectedItemColor:
+            const Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
+        selectedItemColor: const Color.fromARGB(255, 241, 238, 238),
         currentIndex: selectedIndex,
         onTap: (index) => setState(() {
           selectedIndex = index;
