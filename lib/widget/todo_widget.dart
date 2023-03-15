@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/model/todo.dart';
+import 'package:to_do_list/provider/todos.dart';
+import 'package:to_do_list/utils.dart';
 
 class TodoWidget extends StatefulWidget {
   final Todo todo;
@@ -36,7 +38,7 @@ class _TodoWidgetState extends State<TodoWidget> {
             motion: const StretchMotion(),
             children: [
               SlidableAction(
-                onPressed: ((context) {}),
+                onPressed: (context) => deleteTodo(context, widget.todo),
                 backgroundColor: Colors.red,
                 label: 'Delete',
                 icon: Icons.delete,
@@ -56,7 +58,14 @@ class _TodoWidgetState extends State<TodoWidget> {
               activeColor: Colors.green,
               checkColor: Colors.white,
               value: widget.todo.isDone,
-              onChanged: (bool? value) {},
+              onChanged: (bool? value) {
+                final provider =
+                    Provider.of<TodosProvider>(context, listen: false);
+                final isDone = provider.toggleTodoStatus(widget.todo);
+
+                Utils.showSnackBar(context,
+                    isDone ? 'Task completed' : "Task marked incomplete");
+              },
             ),
             const SizedBox(width: 20),
             Expanded(
@@ -83,4 +92,11 @@ class _TodoWidgetState extends State<TodoWidget> {
           ],
         ),
       );
+
+  void deleteTodo(BuildContext context, Todo todo) {
+    final provider = Provider.of<TodosProvider>(context, listen: false);
+    provider.removeTodo(widget.todo);
+
+    Utils.showSnackBar(context, 'Delete the task');
+  }
 }
