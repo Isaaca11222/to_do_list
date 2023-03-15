@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_list/model/todo.dart';
+import 'package:to_do_list/provider/todos.dart';
 import 'package:to_do_list/widget/todo_form_widget.dart';
 
 class AddTodoDialogWidget extends StatefulWidget {
@@ -50,10 +52,16 @@ class _AddTodoDialogWidgetState extends State<AddTodoDialogWidget> {
       return;
     } else {
       final todo = Todo(
-          createdTime: DateTime.now(),
-          title: title,
-          description: description,
-          id: DateTime.now().toString());
+        createdTime: DateTime.now(),
+        title: title,
+        description: description,
+        id: DateTime.now().toString(),
+      );
+
+      final provider =
+          Provider.of<TodosProvider>(context, listen: false).addTodo(todo);
+
+      Navigator.of(context).pop();
     }
   }
 }
