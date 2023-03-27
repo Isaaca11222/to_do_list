@@ -1,9 +1,11 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/model/todo.dart';
 import 'package:to_do_list/provider/todos.dart';
 import 'package:to_do_list/utils.dart';
+import 'package:to_do_list/pages/edit_todo_page.dart';
 
 class TodoWidget extends StatefulWidget {
   final Todo todo;
@@ -18,6 +20,21 @@ class TodoWidget extends StatefulWidget {
 }
 
 class _TodoWidgetState extends State<TodoWidget> {
+  late ConfettiController _confettiController;
+
+  @override
+  void initState() {
+    super.initState();
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 6));
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) => ClipRRect(
         borderRadius: BorderRadius.circular(16),
@@ -27,7 +44,7 @@ class _TodoWidgetState extends State<TodoWidget> {
             motion: const StretchMotion(),
             children: [
               SlidableAction(
-                onPressed: ((context) {}),
+                onPressed: (context) => editTodo(context, widget.todo),
                 backgroundColor: Colors.green,
                 label: 'Edit',
                 icon: Icons.edit,
@@ -62,6 +79,9 @@ class _TodoWidgetState extends State<TodoWidget> {
                 final provider =
                     Provider.of<TodosProvider>(context, listen: false);
                 final isDone = provider.toggleTodoStatus(widget.todo);
+                if (value == true && isDone) {
+                  _confettiController.play();
+                }
 
                 Utils.showSnackBar(context,
                     isDone ? 'Task completed' : "Task marked incomplete");
@@ -89,6 +109,22 @@ class _TodoWidgetState extends State<TodoWidget> {
                 ],
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                _confettiController.play();
+              },
+              child: ConfettiWidget(
+                confettiController: _confettiController,
+                blastDirectionality: BlastDirectionality.explosive,
+                particleDrag:
+                    0.05, // wartość 0 oznacza brak oporu, wartość 1 oznacza dużo oporu
+                emissionFrequency: 0.05, // częstotliwość emisji konfetti
+                numberOfParticles: 20, // liczba konfetti
+                gravity:
+                    0.05, // wartość 0 oznacza brak grawitacji, wartość 1 oznacza dużo grawitacji
+                shouldLoop: true,
+              ),
+            ), // czy konfetti powinno działać w
           ],
         ),
       );
@@ -99,4 +135,10 @@ class _TodoWidgetState extends State<TodoWidget> {
 
     Utils.showSnackBar(context, 'Delete the task');
   }
+
+  void editTodo(BuildContext context, Todo todo) => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => EditTodoPage(todo: widget.todo),
+        ),
+      );
 }

@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
+  confetti:
+    dependency: "direct main"
+    description:
+      name: confetti
+      sha256: "979aafde2428c53947892c95eb244466c109c129b7eee9011f0a66caaca52267"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   crypto:
     dependency: transitive
     description:
@@ -102,6 +110,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_particles:
+    dependency: "direct main"
+    description:
+      name: flutter_particles
+      sha256: e86613e87f823c1c55b87bfb6dc6790809c85d72d3ad5c1fddf76cb8de4a45a4
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+7"
   flutter_slidable:
     dependency: "direct main"
     description:
