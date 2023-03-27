@@ -20,18 +20,19 @@ class TodoWidget extends StatefulWidget {
 }
 
 class _TodoWidgetState extends State<TodoWidget> {
-  late ConfettiController _confettiController;
+  bool isPlaying = false;
+  final controller = ConfettiController();
 
   @override
   void initState() {
     super.initState();
-    _confettiController =
-        ConfettiController(duration: const Duration(seconds: 6));
+
+    controller.play();
   }
 
   @override
   void dispose() {
-    _confettiController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -80,7 +81,7 @@ class _TodoWidgetState extends State<TodoWidget> {
                     Provider.of<TodosProvider>(context, listen: false);
                 final isDone = provider.toggleTodoStatus(widget.todo);
                 if (value == true && isDone) {
-                  _confettiController.play();
+                  controller.play();
                 }
 
                 Utils.showSnackBar(context,
@@ -111,10 +112,10 @@ class _TodoWidgetState extends State<TodoWidget> {
             ),
             GestureDetector(
               onTap: () {
-                _confettiController.play();
+                controller.play();
               },
               child: ConfettiWidget(
-                confettiController: _confettiController,
+                confettiController: controller,
                 blastDirectionality: BlastDirectionality.explosive,
                 particleDrag:
                     0.05, // wartość 0 oznacza brak oporu, wartość 1 oznacza dużo oporu
@@ -122,7 +123,7 @@ class _TodoWidgetState extends State<TodoWidget> {
                 numberOfParticles: 20, // liczba konfetti
                 gravity:
                     0.05, // wartość 0 oznacza brak grawitacji, wartość 1 oznacza dużo grawitacji
-                shouldLoop: true,
+                shouldLoop: false,
               ),
             ), // czy konfetti powinno działać w
           ],
