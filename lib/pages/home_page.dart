@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/widget/add_todo.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,11 +16,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var selectedIndex = 0;
+  final confettiController = ConfettiController();
+
+  @override
+  void dispose() {
+    confettiController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      const TodoListWidget(),
+      TodoListWidget(
+        onChecked: () {
+          confettiController.play();
+        },
+      ),
       const CompletedListWidget(),
     ];
 
@@ -60,7 +72,19 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: tabs[selectedIndex],
+      body: Stack(
+        children: [
+          tabs[selectedIndex],
+          ConfettiWidget(
+            confettiController: confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            emissionFrequency: 0.05,
+            numberOfParticles: 50,
+            gravity: 0.2,
+            shouldLoop: true,
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

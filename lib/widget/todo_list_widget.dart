@@ -4,7 +4,8 @@ import 'package:to_do_list/provider/todos.dart';
 import 'package:to_do_list/widget/todo_widget.dart';
 
 class TodoListWidget extends StatefulWidget {
-  const TodoListWidget({super.key});
+  final Function() onChecked;
+  const TodoListWidget({Key? key, required this.onChecked}) : super(key: key);
 
   @override
   State<TodoListWidget> createState() => _TodoListWidgetState();
@@ -31,7 +32,10 @@ class _TodoListWidgetState extends State<TodoListWidget> {
             itemBuilder: (context, index) {
               final todo = todos[index];
 
-              return TodoWidget(todo: todo);
+              return TodoWidget(
+                todo: todo,
+                onChecked: () => widget.onChecked(),
+              );
             });
   }
 }

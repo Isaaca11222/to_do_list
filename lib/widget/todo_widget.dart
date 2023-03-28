@@ -9,10 +9,12 @@ import 'package:to_do_list/pages/edit_todo_page.dart';
 
 class TodoWidget extends StatefulWidget {
   final Todo todo;
+  final VoidCallback onChecked;
 
   const TodoWidget({
     Key? key,
     required this.todo,
+    required this.onChecked,
   }) : super(key: key);
 
   @override
@@ -110,22 +112,6 @@ class _TodoWidgetState extends State<TodoWidget> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                controller.play();
-              },
-              child: ConfettiWidget(
-                confettiController: controller,
-                blastDirectionality: BlastDirectionality.explosive,
-                particleDrag:
-                    0.05, // wartość 0 oznacza brak oporu, wartość 1 oznacza dużo oporu
-                emissionFrequency: 0.05, // częstotliwość emisji konfetti
-                numberOfParticles: 20, // liczba konfetti
-                gravity:
-                    0.05, // wartość 0 oznacza brak grawitacji, wartość 1 oznacza dużo grawitacji
-                shouldLoop: false,
-              ),
-            ), // czy konfetti powinno działać w
           ],
         ),
       );
